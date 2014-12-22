@@ -45,8 +45,16 @@
       images = images.not(loaded);
     }
 
-    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+    function offUnveil() {
+      $w.off("scroll.unveil resize.unveil lookup.unveil", unveil)
+      $w.off("off-unveil", offUnveil);
+      $(this).off("off-unveil", offUnveil);
+    }
 
+    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+    $w.on("off-unveil", offUnveil);
+    $(this).on("off-unveil", offUnveil);
+    
     unveil();
 
     return this;
